@@ -45,3 +45,9 @@
 
   - name: 'slack'
     homebrew_cask: {name: 'slack'}
+
+  - name: 'flycut'
+    homebrew_cask: {name: 'flycut'}
+
+  - name: 'shiftit'
+    homebrew_cask: {name: 'shiftit'}
