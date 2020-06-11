@@ -1,0 +1,47 @@
+---
+- hosts: 'all'
+  vars:
+    bin: '{{ ansible_env.PWD }}/bin'
+  tasks:
+  - name: 'bin'
+    lineinfile:
+      path: '~/.zshrc'
+      line: 'export PATH="${PATH}:{{ bin }}"'
+      create: true
+
+  - name: 'brew: upgrade'
+    homebrew:
+      update_homebrew: true
+      upgrade_all: true
+
+  - name: 'go'
+    homebrew: {name: 'go'}
+  - name: 'go: env'
+    lineinfile:
+      path: '~/.zshrc'
+      line: '{{ item }}'
+      create: true
+    with_items:
+    - 'export GOPATH="${HOME}/go"'
+    - 'export PATH="${PATH}:${GOPATH}"'
+
+  - name: 'lua'
+    homebrew: {name: ['lua', 'luarocks']}
+
+  - name: 'rust'
+    homebrew: {name: 'rust'}
+
+  - name: 'shellcheck'
+    homebrew: {name: 'shellcheck'}
+
+  - name: 'jq'
+    homebrew: {name: 'jq'}
+
+  - name: 'atom'
+    homebrew_cask: {name: 'atom'}
+
+  - name: 'firefox'
+    homebrew_cask: {name: 'firefox'}
+
+  - name: 'slack'
+    homebrew_cask: {name: 'slack'}
