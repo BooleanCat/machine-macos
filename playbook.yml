@@ -15,7 +15,7 @@
       upgrade_all: true
 
   - name: 'go'
-    homebrew: {name: 'go'}
+    homebrew: {name: ['go', 'golangci/tap/golangci-lint']}
   - name: 'go: env'
     lineinfile:
       path: '~/.zshrc'
@@ -51,3 +51,6 @@
 
   - name: 'shiftit'
     homebrew_cask: {name: 'shiftit'}
+
+  - name: 'visual studio'
+    homebrew_cask: {name: 'visual-studio-code'}
