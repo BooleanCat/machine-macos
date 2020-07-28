@@ -45,6 +45,9 @@
     register: 'omf_install'
     changed_when: '"already installed" not in omf_install["stderr"]'
 
+  - name: 'alacritty'
+    homebrew_cask: {name: 'alacritty'}
+
   - name: 'go'
     homebrew: {name: ['go', 'golangci/tap/golangci-lint']}
   - name: 'go: env'
