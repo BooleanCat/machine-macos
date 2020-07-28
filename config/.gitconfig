@@ -1,0 +1,7 @@
+[alias]
+st = status
+co = checkout
+ci = commit --verbose
+lola = log --graph --decorate --oneline --all
+pr = pull --rebase
+dc = diff --cached

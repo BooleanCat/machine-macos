@@ -3,6 +3,7 @@
   vars:
     bin: '{{ ansible_env.PWD }}/bin'
     install: '{{ ansible_env.PWD }}/install'
+    config: '{{ ansible_env.PWD }}/config'
   tasks:
   - name: 'bin'
     lineinfile:
@@ -93,3 +94,11 @@
 
   - name: 'notion'
     homebrew_cask: {name: 'notion'}
+
+  - name: 'git: config'
+    ini_file:
+      path: '~/.gitconfig'
+      create: true
+      section: 'include'
+      option: 'path'
+      value: '{{ config }}/.gitconfig'
