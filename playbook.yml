@@ -2,28 +2,64 @@
 - hosts: 'all'
   vars:
     bin: '{{ ansible_env.PWD }}/bin'
+    install: '{{ ansible_env.PWD }}/install'
   tasks:
   - name: 'bin'
     lineinfile:
-      path: '~/.zshrc'
-      line: 'export PATH="${PATH}:{{ bin }}"'
+      path: '{{ item.path }}'
+      line: '{{ item.line }}'
       create: true
+    with_items:
+    - path: '~/.zshrc'
+      line: 'export PATH="${PATH}:{{ bin }}"'
+    - path: '~/.config/fish/config.fish'
+      line: 'set PATH {{ bin }} $PATH'
 
   - name: 'brew: upgrade'
     homebrew:
       update_homebrew: true
       upgrade_all: true
 
+  - name: 'fish'
+    homebrew: {name: 'fish'}
+  - name: 'fish: default shell'
+    shell: '{{ install }}/fish-default-shell.bash {{ ansible_user_id }}'
+    become: true
+    register: 'fish_default_shell'
+    changed_when: '"already default" not in fish_default_shell["stdout"]'
+  - name: 'fish: oh-my-fish'
+    shell: '{{ install }}/omf.bash'
+    register: 'fish_omf'
+    changed_when: '"already installed" not in fish_omf["stdout"]'
+  - name: 'fish: oh-my-fish update'
+    shell: 'omf update'
+    args:
+      executable: 'fish'
+    register: 'omf_update'
+    changed_when: '"already up-to-date" not in omf_update.stdout'
+  - name: 'fish: oh-my-fish install'
+    shell: 'omf install clearance bass'
+    args:
+      executable: 'fish'
+    register: 'omf_install'
+    changed_when: '"already installed" not in omf_install["stderr"]'
+
   - name: 'go'
     homebrew: {name: ['go', 'golangci/tap/golangci-lint']}
   - name: 'go: env'
     lineinfile:
-      path: '~/.zshrc'
-      line: '{{ item }}'
+      path: '{{ item.path }}'
+      line: '{{ item.line }}'
       create: true
     with_items:
-    - 'export GOPATH="${HOME}/go"'
-    - 'export PATH="${PATH}:${GOPATH}"'
+    - path: '~/.zshrc'
+      line: 'export GOPATH="${HOME}/go"'
+    - path: '~/.config/fish/config.fish'
+      line: 'set -Ux GOPATH $HOME/go'
+    - path: '~/.zshrc'
+      line: 'export PATH="${PATH}:${GOPATH}"'
+    - path: '~/.config/fish/config.fish'
+      line: 'set PATH $GOPATH/bin $PATH'
 
   - name: 'lua'
     homebrew: {name: ['lua', 'luarocks']}

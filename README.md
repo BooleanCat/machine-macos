@@ -22,6 +22,11 @@ shiftit
 1. Launch shiftit manually
 1. Accept start on login
 
+## fish shell
+
+In order for the fish shell to be the default shell, log out or restart the
+machine.
+
 # Updating
 
 1. Run `machine-update`
