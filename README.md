@@ -27,6 +27,11 @@ shiftit
 In order for the fish shell to be the default shell, log out or restart the
 machine.
 
+## neovim
+
+The 'neovim' module for python3 must be installed via `pip3 install neovim`.
+The first time neovim is launched it will take some time to install plugins.
+
 # Updating
 
 1. Run `machine-update`

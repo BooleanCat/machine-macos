@@ -34,14 +34,12 @@
     changed_when: '"already installed" not in fish_omf["stdout"]'
   - name: 'fish: oh-my-fish update'
     shell: 'omf update'
-    args:
-      executable: 'fish'
+    args: {executable: 'fish'}
     register: 'omf_update'
     changed_when: '"already up-to-date" not in omf_update.stdout'
   - name: 'fish: oh-my-fish install'
     shell: 'omf install clearance bass'
-    args:
-      executable: 'fish'
+    args: {executable: 'fish'}
     register: 'omf_install'
     changed_when: '"already installed" not in omf_install["stderr"]'
 
@@ -97,6 +95,22 @@
 
   - name: 'notion'
     homebrew_cask: {name: 'notion'}
+
+  - name: 'ripgrep'
+    homebrew: {name: 'ripgrep'}
+
+  - name: 'fd'
+    homebrew: {name: 'fd'}
+
+  - name: 'npm'
+    homebrew: {name: 'npm'}
+
+  - name: 'neovim'
+    homebrew: {name: 'neovim'}
+  - name: 'neovim: config'
+    git:
+      repo: 'https://github.com/luan/nvim'
+      dest: '~/.config/nvim'
 
   - name: 'git: config'
     ini_file:
