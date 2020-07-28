@@ -54,3 +54,6 @@
 
   - name: 'visual studio'
     homebrew_cask: {name: 'visual-studio-code'}
+
+  - name: 'notion'
+    homebrew_cask: {name: 'notion'}
