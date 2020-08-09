@@ -38,10 +38,13 @@
     register: 'omf_update'
     changed_when: '"already up-to-date" not in omf_update.stdout'
   - name: 'fish: oh-my-fish install'
-    shell: 'omf install clearance bass'
+    shell: 'omf install bass'
     args: {executable: 'fish'}
     register: 'omf_install'
     changed_when: '"already installed" not in omf_install["stderr"]'
+
+  - name: 'starship'
+    homebrew: {name: 'starship'}
 
   - name: 'alacritty'
     homebrew_cask: {name: 'alacritty'}
