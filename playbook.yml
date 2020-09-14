@@ -45,6 +45,16 @@
 
   - name: 'starship'
     homebrew: {name: 'starship'}
+  - name: 'starship: env'
+    lineinfile:
+      path: '{{ item.path }}'
+      line: '{{ item.line }}'
+      create: true
+    with_items:
+    - path: '~/.zshrc'
+      line: 'eval "$(starship init zsh)"'
+    - path: '~/.config/fish/config.fish'
+      line: 'starship init fish | source'
 
   - name: 'alacritty'
     homebrew_cask: {name: 'alacritty'}
