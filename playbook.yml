@@ -36,7 +36,7 @@
     shell: 'omf update'
     args: {executable: 'fish'}
     register: 'omf_update'
-    changed_when: '"already up-to-date" not in omf_update.stdout'
+    changed_when: '"already up-to-date" not in omf_update["stdout"]'
   - name: 'fish: oh-my-fish install'
     shell: 'omf install bass'
     args: {executable: 'fish'}
