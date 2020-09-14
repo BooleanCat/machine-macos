@@ -108,6 +108,43 @@
   - name: 'npm'
     homebrew: {name: 'npm'}
 
+  - name: 'pyenv'
+    homebrew: {name: ['pyenv', 'pyenv-virtualenv']}
+  - name: 'pyenv: env'
+    lineinfile:
+      path: '{{ item.path }}'
+      line: '{{ item.line }}'
+      create: true
+    with_items:
+    - path: '~/.zshrc'
+      line: 'export PYENV_ROOT="$HOME/.pyenv"'
+    - path: '~/.config/fish/config.fish'
+      line: 'set -Ux PYENV_ROOT $HOME/.pyenv'
+    - path: '~/.zshrc'
+      line: 'export PATH="$PYENV_ROOT/bin:$PATH"'
+    - path: '~/.config/fish/config.fish'
+      line: 'set -Ux fish_user_paths $PYENV_ROOT/bin $fish_user_paths'
+    - path: '~/.zshrc'
+      line: 'eval "$(pyenv init -)"'
+    - path: '~/.config/fish/config.fish'
+      line: 'pyenv init - | source'
+    - path: '~/.zshrc'
+      line: 'eval "$(pyenv virtualenv-init -)"'
+    - path: '~/.config/fish/config.fish'
+      line: 'pyenv virtualenv-init - | source'
+
+  - name: 'direnv'
+    homebrew: {name: 'direnv'}
+  - name: 'direnv: env'
+    lineinfile:
+      path: '{{ item.path }}'
+      line: '{{ item.line }}'
+    with_items:
+    - path: '~/.zshrc'
+      line: 'eval "$(direnv hook zsh)"'
+    - path: '~/.config/fish/config.fish'
+      line: 'eval (direnv hook fish)'
+
   - name: 'neovim'
     homebrew: {name: 'neovim'}
   - name: 'neovim: config'
